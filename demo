@@ -1,0 +1,45 @@
+def tictactoe():
+    player1moves = []
+    player2moves = []
+    winningmoves = [(1,2,3),(5,6,7),(9,10,11),(1,5,9),(2,6,10),(3,7,11),(1,6,11),(9,6,3)]
+    player1movedict = {'q':1,'w':2,'e':3,'a':5,'s':6,'d':7,'z':9,'x':10,'c':11}
+    player2movedict = {'i':1,'o':2,'p':3,'j':5,'k':6,'l':7,'n':9,'m':10,',':11}
+    gameon = True
+    board = ['',' ',' ',' ','\n',' ',' ',' ','\n',' ',' ',' ','']
+    turn = 1
+    player1name = input('PLayer 1, enter your name: ')
+    player2name = input('PLayer 2, enter your name: ')
+    while gameon == True and turn < 10:
+        if turn % 2 == 1:
+            x = input(f'{player1name} its your move: ')
+            if x.lower() in player1movedict.keys() and player1movedict[x] in player2movedict.values():
+                player1moves.append(player1movedict[x.lower()])
+                board[player1movedict.pop(x.lower())] = 'X'
+                print("-".join(board))
+                turn+=1
+                for x in winningmoves:
+                    if len(set(x)&set(player1moves)) == 3:
+                        print(f'Congratulations {player1name}! You won!')
+                        gameon = False
+            else:
+                print('That is not a vaild move. Please try again dumb dumb.')
+                
+        elif turn % 2 == 0:
+            o = input(f'{player2name} its your move: ')
+            if o.lower() in player2movedict.keys() and player2movedict[o] in player1movedict.values():
+                player2moves.append(player2movedict[o.lower()])
+                board[player2movedict.pop(o.lower())] = 'O'
+                print("-".join(board))
+                turn+=1
+                for x in winningmoves:
+                    if len(set(x)&set(player2moves)) == 3:
+                        print(f'Congratulations {player2name}! You won!')
+                        gameon = False
+            else:
+                print('That is not a vaild move. Please try again dumb dumb.')
+        else:
+            print('Well shit, you broke the game.')
+            return
+    else:
+        print('GAME OVER')
+        return
